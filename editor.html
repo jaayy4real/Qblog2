@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rich Text Editor</title>
+    <link rel="stylesheet" href="editor.css"/>
+    <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
+    <style>
+      #editor-container {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          style="width: 100%"
+          placeholder="TITLE"
+        /><br /><br />
+      </div>
+
+      <div id="editor-container">
+        <div id="editor" style="height: 300px">
+          <p id="body"></p>
+        </div>
+      </div>
+
+      <button id="saveButton">Post</button>
+    </div>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <!-- <script src="script.js"></script> -->
+  </body>
+  <script src="/refresh.js"></script>
+  <script src="/creat.js">
+
+    
+  </script>
+</html>

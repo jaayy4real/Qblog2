@@ -1,0 +1,6 @@
+@Postdb_HostAddress = http://localhost:5105
+
+GET {{Postdb_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

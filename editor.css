@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* outline: 1px solid; */
+}
+
+.container{
+    margin-left: 15rem;
+    margin-right: 15rem;
+    margin-top: 5rem;
+}
+#title{
+    font-size: larger;
+    height: 5rem;
+    padding-left: 1rem;
+}
+input:focus{
+    outline: 2px solid;
+}
+
+#editor:focus{
+    outline: 2px solid;
+}
+
+#saveButton{
+    display: flex;
+    width: 4rem;
+    height: 2.5rem;
+    border: 1px solid;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    background-color: black;
+    color: white;
+}

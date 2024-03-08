@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+</head>
+<body>
+
+<div class="header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <h1>QBlog</h1>
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                    <li><a href="">Home</a></li>
+                    <li><a href="">About Us</a></li>
+                    <li><a href="">Contact</a></li>
+                    <li class="sign-up"><a href="" style="color: white;">Sign In</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="swiper-container">
+    <div class="swiper-wrapper" id="swiper-wrapper">
+        <!-- Swiper slides will be dynamically added here -->
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+</div>
+
+
+<div class="container">
+    
+
+    <div class="box-container">
+        <div class="box">
+            <img src="" style="color: aqua;">
+        </div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+
+    <div class="box-container">
+        <div class="rectangle-box"></div>
+    </div>
+
+    <div class="box-container">
+        <div class="rectangle-box2"></div>
+        <div class="box"></div>
+    </div>
+
+    <div class="box-container2">
+        <div class="box-2"></div>
+
+        <div class="content">
+            <p>This is quicksly</p>
+            <h1>Brain Teaser step for pre teens</h1>
+            <p>Jeffrey Jeff Ekpo | January 13</p>
+
+        </div>
+        
+       
+    </div>
+    <hr>
+
+     <div class="box-container2">
+        <div class="box-2"></div>
+
+        <div class="content">
+            <p>This is quicksly</p>
+            <h1>Brain Teaser step for pre teens</h1>
+            <p>Jeffrey Jeff Ekpo | January 13</p>
+
+        </div>
+        
+       
+    </div>
+    <hr>
+
+     <div class="box-container2">
+        <div class="box-2"></div>
+
+        <div class="content">
+            <p>This is quicksly</p>
+            <h1>Penis enlargement step for pre teens</h1>
+            <p>Jeffrey Jeff Ekpo | January 13</p>
+
+        </div>
+        
+       
+    </div>
+
+
+    
+
+
+
+</div>
+
+
+<!-- Other HTML content -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var mySwiper = new Swiper('.swiper-container', {
+            loop: true,
+            autoplay: {
+                delay: 2000, // 5 seconds per slide
+            },
+            speed: 1000, // 1 second transition speed
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+
+        // Fetch data from the API
+        fetch('http://localhost:5105/api/Post')
+            .then(response => response.json())
+            .then(data => {
+                // Populate Swiper slides with data
+                data.forEach(post => {
+                    var slide = document.createElement('div');
+                    slide.className = 'swiper-slide';
+
+                    // Create a container for title and body
+                    var contentContainer = document.createElement('div');
+                    contentContainer.className = 'content-container';
+
+                    // Create elements for title and body
+                    var titleElement = document.createElement('h1');
+                    titleElement.textContent = post.title;
+
+                    var bodyElement = document.createElement('p');
+                    bodyElement.textContent = post.body;
+
+                    // Append title and body to the content container
+                    contentContainer.appendChild(titleElement);
+                    contentContainer.appendChild(bodyElement);
+
+                    // Append the content container to the slide
+                    slide.appendChild(contentContainer);
+
+                    // Append the slide to the Swiper container
+                    document.getElementById('swiper-wrapper').appendChild(slide);
+                    mySwiper.addSlide(slide);
+                });
+
+                // Update Swiper to reflect the changes
+                mySwiper.update();
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    });
+</script>
+
+</body>
+</html>
