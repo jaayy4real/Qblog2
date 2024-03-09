@@ -71,7 +71,7 @@ public class Authcontoller:ControllerBase{
 
     }
 
-     [Authorize]
+   
      [HttpPost("api/follow")]
 
     public ActionResult followuser(string id,string followerid){
@@ -89,6 +89,16 @@ public class Authcontoller:ControllerBase{
 
         follow.unfollow(id,followerid);    
         return Ok();
+        
+    }
+
+    [HttpGet("api/follow")]
+    public ActionResult followstate(string following,string userid){
+
+
+        var response=follow.followstate(following,userid); 
+
+        return Ok(response);
         
     }
 

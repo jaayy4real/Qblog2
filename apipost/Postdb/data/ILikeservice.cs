@@ -12,7 +12,7 @@ public interface Ilike{
     public bool unLikepost(string likeid);
 
 
-    public responseCountObject postcount(string postid);
+    public responseCountObject postcount(string postid,string userid);
 
 
 }

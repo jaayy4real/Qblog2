@@ -128,16 +128,24 @@ namespace Postdb.data
         }
 
             
-        public responseCountObject postcount(string postid)
+        public responseCountObject postcount(string postid,string userid)
         {
             var collect = mongoCollection<Likes>(colloctionname2);
 
-
+            bool state = false;
             string num = collect.CountDocuments(x => x.Postid == postid).ToString();
-        
-            var res = collect.Find(x => x.Postid == postid).FirstOrDefault();
-            var num2 = new responseCountObject (  num,  res.state );
+
+            var res = collect.Find(x => x.Postid == postid && x.Userid==userid).FirstOrDefault();
+
+            if(res!=null){
+
+                state=true;
+
+            }
+
+            var num2 = new responseCountObject (  num, state );
             return num2;
+
         }
 
         private List<string> getfollowerslist(string userid)

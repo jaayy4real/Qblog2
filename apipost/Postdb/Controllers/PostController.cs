@@ -129,9 +129,9 @@ public class Postcontroller:ControllerBase{
     [AllowAnonymous]
      [HttpGet("api/Post/like")]
 
-     public ActionResult likepostcount(string postid){
+     public ActionResult likepostcount(string postid,string userid){
        
-      var response = like.postcount(postid);
+      var response = like.postcount(postid,userid);
       return Ok(response );
 
     }

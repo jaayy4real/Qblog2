@@ -209,5 +209,21 @@ public class Authuser : Iauth, Ifollow
         return new JwtSecurityTokenHandler().ValidateToken(token, Parameters, out _);
     }
 
-    
+    public bool followstate(string following, string user)
+    {
+         var collect = getcollection<User>(collectionname);
+
+         var respond = collect.Find(u => u.id == following).FirstOrDefault();
+
+        if (respond != null)
+          {
+              if (respond.followers != new List<Followers>{} && respond.followers.Any(f => f.userid == user))
+            {
+               return true;
+            }
+          }
+
+         return false;
+         
+    }
 }
