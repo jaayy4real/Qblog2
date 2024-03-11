@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const likeIcon = document.createElement('i');
             likeIcon.classList.add('far', 'fa-heart'); // Using 'far' for regular Font Awesome icons
             likeIcon.style.cursor = 'pointer'; // Add pointer cursor to indicate it's clickable
-            let isLiked = false; // Initial state of like
+            let isLiked = false // Initial state of like
 
             let likeid;
             // let status; 
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 isLiked = !isLiked;
 
                 try {
-                    if (isLiked) {
+                    if (isLiked === true) {
                         const likeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
 
                         fetch(likeurl, {
@@ -114,20 +114,18 @@ document.addEventListener('DOMContentLoaded', function () {
                         .then(data => {
                             likeid = data.likeid;
                              status = data.state;
-                             Promise.resolve(status)
-                             
-                            console.log(data.state);
-                            console.log(status); // Log status here
-                            handleState(status); // Pass status to handleState function
+                             console.log(likeid);
+                              // Log status here
+                             // Pass status to handleState function
                         })
                         .catch(error => console.error(error));
 
                         likeIcon.classList.remove('far'); // Remove regular class
                         likeIcon.classList.add('fas'); // Add solid class
                         console.log('Liked post:', item.id);
-                        likeCounter();
+                        // likeCounter();
 
-                    } else {
+                    } else if (isLiked === false) {
                         const unlikeurl = `http://localhost:5105/api/Post/like?likeid=${encodeURIComponent(likeid)}`;
 
                         fetch(unlikeurl,{
@@ -138,22 +136,23 @@ document.addEventListener('DOMContentLoaded', function () {
                         })
                         .then(response => response.json())
                         .then(data => {
+                            console.log(data);
+                            // logger.debug(data)
                             // status = data.state;
-                            console.log(status); // Log status here
-                            handleState(status); // Pass status to handleState function
+                             // Pass status to handleState function
                         })
                         .catch(error => console.error(error));
 
                         likeIcon.classList.remove('fas'); // Remove solid class
                         likeIcon.classList.add('far'); // Add regular class
                         console.log('Unliked post:', item.id);
-                        likeCounter();
+                        // likeCounter();
                     }
 
                 } catch (error) {
                     console.error(error);
                 }
-                return handleState(status); // Pass status to handleState function
+     
             };
             likeIcon.addEventListener('click', likeClick)
 
@@ -162,12 +161,12 @@ document.addEventListener('DOMContentLoaded', function () {
             // status = likeClick;
             console.log(status);
 
-            function handleState(status) {
-                // Use the status variable here
-                console.log('Status:', status);
-                // Perform actions based on the status
-            }
-            handleState()
+            // function handleState(status) {
+            //     // Use the status variable here
+            //     console.log('Status:', status);
+            //     // Perform actions based on the status
+            // }
+            // handleState()
 
 
             // Access status outside the event listener function
@@ -182,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
             function likeCounter(){
                 let counter 
                 const postId = item.id
-                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}`
+                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
                 fetch(likeCount, {
                     method:'GET',
                     headers:{
@@ -190,9 +189,20 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 })
 
-                .then(response => response.text())
-                .then(data => {count.textContent=data
-                    console.log(data.state);
+                .then(response => response.json())
+                .then(data => {count.textContent=data.count
+                    
+                    console.log(data);
+                    if (data.state === true){
+                        isLiked = true;
+                        likeIcon.classList.remove('far')
+                        likeIcon.classList.add('fas')
+                    }
+                    else if (data.state === false){
+                        isLiked = false;
+                        likeIcon.classList.remove('fas')
+                        likeIcon.classList.add('far')
+                    }
                 })
                 .catch(error => console.error(error))
                 
