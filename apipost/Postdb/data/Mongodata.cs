@@ -119,11 +119,11 @@ namespace Postdb.data
 
         }
 
-        public bool unLikepost(string likeid)
+        public bool unLikepost(string postid, string user)
         {
             var collect = mongoCollection<Likes>(colloctionname2);
-            collect.DeleteOne(x => x.Id == likeid);
-
+            collect.DeleteOne(x => x.Postid == postid && x.Userid==user);
+            
             return false;
         }
 

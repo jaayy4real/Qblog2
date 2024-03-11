@@ -118,9 +118,9 @@ public class Postcontroller:ControllerBase{
      [AllowAnonymous]
     [HttpDelete("api/Post/like")]
 
-    public ActionResult unlikepost(string likeid){
+    public ActionResult unlikepost(string postid, string user){
 
-      var response=like.unLikepost(likeid);
+      var response=like.unLikepost(postid,user);
 
       return Ok(response);
 
