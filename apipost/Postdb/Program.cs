@@ -15,10 +15,10 @@ builder.Services.Configure<ConnectionStrings>(builder.Configuration.GetSection("
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddSingleton<Itoken,Tokenaccess>();
+builder.Services.AddTransient<Itoken,Tokenaccess>();
 builder.Services.AddScoped<Ipost,Mongodata>();
 builder.Services.AddScoped<Ilike,Mongodata>();
-builder.Services.AddSingleton<Iauth,Authuser>();
+builder.Services.AddTransient<Iauth,Authuser>();
 builder.Services.AddScoped<Ifollow,Authuser>();
 builder.Services.AddTransient<Exceptionhandler>();
 
