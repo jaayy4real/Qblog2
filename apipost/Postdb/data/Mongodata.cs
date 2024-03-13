@@ -108,9 +108,17 @@ namespace Postdb.data
 
         public Likeobj Likepost(string postid, string user)
         {
+            var collect = mongoCollection<Likes>(colloctionname2);
+
+            var obj = collect.Find(x => x.Postid == postid && x.Userid==user);
+
+            if(obj != null){
+
+                throw new Exception("already liked post");
+            }
+
             var lik = new Likes { Id = ObjectId.GenerateNewId().ToString(), state= true ,Postid = postid, Userid = user };
 
-            var collect = mongoCollection<Likes>(colloctionname2);
             collect.InsertOne(lik);
 
             Likeobj response = new Likeobj { likeid = lik.Id, state = lik.state };

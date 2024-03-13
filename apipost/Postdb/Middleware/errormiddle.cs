@@ -14,6 +14,10 @@ public class Exceptionhandler : IMiddleware
         }
         catch (Exception ex)
         { 
+           var response = context.Response;
+
+           response.StatusCode = 500;
+
            var problem = new ProblemDetails{
 
             Type="https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.1",
