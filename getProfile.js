@@ -5,6 +5,17 @@ document.addEventListener('DOMContentLoaded', function(){
     username.textContent = postUser;
     const id = localStorage.getItem('getUser');
     console.log(id);
+
+    const myProfile = ()=>{
+        const userID = localStorage.getItem('userID');
+        if(userID === id){
+            window.location.href = 'http://127.0.0.1:5500/profile-page.html'
+        }
+    }
+    myProfile()
+
+
+
     const port = 'http://localhost:5105'
     const endPoint =`/api/page/${id}`
     fetch(port + endPoint)
@@ -97,11 +108,12 @@ document.addEventListener('DOMContentLoaded', function(){
             const likeClick = () =>{
                 // Toggle like state
                 const postID = item.id;
+                const userID = localStorage.getItem('userID');
                 const username = item.username;
                 isLiked = !isLiked;
 
                 try {
-                    if (isLiked) {
+                    if (isLiked === true) {
                         const likeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
 
                         fetch(likeurl, {
@@ -113,12 +125,9 @@ document.addEventListener('DOMContentLoaded', function(){
                         .then(response => response.json() )
                         .then(data => {
                             likeid = data.likeid;
-                             status = data.state;
-                             Promise.resolve(status)
+                            
                              
-                            console.log(data.state);
-                            console.log(status); // Log status here
-                            handleState(status); // Pass status to handleState function
+                           // Pass status to handleState function
                         })
                         .catch(error => console.error(error));
 
@@ -127,8 +136,8 @@ document.addEventListener('DOMContentLoaded', function(){
                         console.log('Liked post:', item.id);
                         likeCounter();
 
-                    } else {
-                        const unlikeurl = `http://localhost:5105/api/Post/like?likeid=${encodeURIComponent(likeid)}`;
+                    } else if(isLiked === false){
+                        const unlikeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
 
                         fetch(unlikeurl,{
                             method:'DELETE',
@@ -181,8 +190,10 @@ document.addEventListener('DOMContentLoaded', function(){
             
             function likeCounter(){
                 let counter 
+                const userID = localStorage.getItem('userID');
+                
                 const postId = item.id
-                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}`
+                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
                 fetch(likeCount, {
                     method:'GET',
                     headers:{
@@ -190,9 +201,20 @@ document.addEventListener('DOMContentLoaded', function(){
                     }
                 })
 
-                .then(response => response.text())
-                .then(data => {count.textContent=data
+                .then(response => response.json())
+                .then(data => {count.textContent=data.count
                     console.log(data.state);
+                     console.log(data);
+                    if (data.state === true){
+                        isLiked = true;
+                        likeIcon.classList.remove('far')
+                        likeIcon.classList.add('fas')
+                    }
+                    else if (data.state === false){
+                        isLiked = false;
+                        likeIcon.classList.remove('fas')
+                        likeIcon.classList.add('far')
+                    }
                 })
                 .catch(error => console.error(error))
                 
@@ -287,5 +309,30 @@ document.addEventListener('DOMContentLoaded', function(){
         // console.log('clicked by me');
     })
 
-    
+    function followState (){
+        const userID = localStorage.getItem('userID')
+        const endpoints = `/api/follow?following=${encodeURIComponent(id)}&userid=${encodeURIComponent(userID)}`
+
+        fetch(port + endpoints)
+        .then(response => response.json())
+        .then(data => {
+            if(data === true){
+                isFollow = true;
+                followButton.innerText = 'Following'
+                followButton.style.backgroundColor = 'white'
+                followButton.style.color = 'black'
+                followButton.style.cursor = 'pointer'
+            }else if(data === false){
+                isFollow = false;
+                followButton.innerText = 'Follow'
+                followButton.style.backgroundColor = 'black'
+                followButton.style.color = 'white'
+                followButton.style.cursor = 'pointer'
+            }
+            console.log(data);
+        })
+        .catch(error => {console.error(error);})
+    }
+
+    followState()
 })

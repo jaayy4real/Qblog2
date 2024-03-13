@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const username = item.username
                 isLiked = !isLiked;
                 if (isLiked) {
-                    const likeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(username)}`
+                    const likeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`
                     
                     fetch(likeurl, {
                         method: 'POST',
@@ -158,12 +158,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log('Liked post:', item.id);
 
                 } else {
-                    fetch(apiBaseUrl + '/api/Post/unlike', {
+                    const unlikeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`
+                    fetch(unlikeurl, {
                         method: 'POST',
                         headers:{
                             'Content-Type': 'application/json'
                         },
-                        body:JSON.stringify(details)
+                        // body:JSON.stringify(details)
                     })
                     .catch(error => console.error(error))
                     likeIcon.classList.remove('fas'); // Remove solid class
@@ -172,6 +173,40 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
+            function likeCounter(){
+                let counter 
+                const postId = item.id
+                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
+                fetch(likeCount, {
+                    method:'GET',
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }
+                })
+
+                .then(response => response.json())
+                .then(data => {count.textContent=data.count
+                    
+                    console.log(data);
+                    if (data.state === true){
+                        isLiked = true;
+                        likeIcon.classList.remove('far')
+                        likeIcon.classList.add('fas')
+                    }
+                    else if (data.state === false){
+                        isLiked = false;
+                        likeIcon.classList.remove('fas')
+                        likeIcon.classList.add('far')
+                    }
+                })
+                .catch(error => console.error(error))
+                
+                
+                return counter
+                
+            }
+            likeCounter()
+
             const shareIcon = document.createElement('i');
             shareIcon.classList.add('fas', 'fa-share'); // Adjust classes for the share icon
             shareIcon.style.cursor = 'pointer'; // Add pointer cursor to indicate it's clickable
@@ -179,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Handle share action here
                 console.log('Shared post:', item.id);
             });
-
+             postHolder.addEventListener('mouseenter', likeCounter)
             body.appendChild(showMoreButton)
 
             postHolder.appendChild(title);
@@ -197,48 +232,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Call getAllAndDisplayPosts after the page is loaded
     getAllAndDisplayPosts();
 
-    let isFollow = false;
-    const followButton = document.getElementById('follow')
-    followButton.addEventListener('click', function () {
-        // const url = `http://localhost:5105/api/follow?id=${encodeURIComponent()}&followerid=${encodeURIComponent()}`
-        isFollow = !isFollow
-        if (isFollow) {
-            // const endPoint = '/api/follow'
 
-            // fetch(apiBaseUrl+ endPoint,{
-            //     method: 'GET',
-            //     headers:{
-            //         'Content-Type': 'application/json',
-            //         'Authorization': `Bearer ${token}`
-            //     }
-            // })
-            // .then(response =>{
-            //     if(!response.ok){
-            //         throw new Error(`HTTP error! Status: ${response.status}`);
-            //     }
-            //     return response.json();
-            // })
-            // .then(data => {
-            //     console.log('Successful liking', data);
-            // })
-            // .catch(error => {
-            //     console.error('Error Liking', error);
-            // })
-
-            followButton.innerText = 'Following'
-            followButton.style.backgroundColor = 'white'
-            followButton.style.color = 'black'
-            console.log('follow');
-        }
-        else{
-
-            followButton.innerText = 'Follow'
-            followButton.style.backgroundColor = 'black'
-            followButton.style.color = 'white'
-            followButton.style.cursor = 'pointer'
-            console.log('unfollow');
-        }
-        // console.log('clicked by me');
-    })
 
 });

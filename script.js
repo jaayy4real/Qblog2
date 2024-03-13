@@ -123,11 +123,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         likeIcon.classList.remove('far'); // Remove regular class
                         likeIcon.classList.add('fas'); // Add solid class
                         console.log('Liked post:', item.id);
-                        // likeCounter();
+                        likeCounter();
 
                     } else if (isLiked === false) {
-                        const unlikeurl = `http://localhost:5105/api/Post/like?likeid=${encodeURIComponent(likeid)}`;
-
+                        const unlikeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
                         fetch(unlikeurl,{
                             method:'DELETE',
                             headers:{
@@ -146,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         likeIcon.classList.remove('fas'); // Remove solid class
                         likeIcon.classList.add('far'); // Add regular class
                         console.log('Unliked post:', item.id);
-                        // likeCounter();
+                        likeCounter();
                     }
 
                 } catch (error) {

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function(){
     const token = localStorage.getItem('token');
 
      const apiBaseUrl = 'http://localhost:5105';
-    // const token = localStorage.getItem('token');
+
     console.log(token);
     const userID = localStorage.getItem('userID');
     const userna = localStorage.getItem('usename')
@@ -135,7 +135,8 @@ document.addEventListener("DOMContentLoaded", function(){
                         likeCounter();
 
                     } else {
-                        const unlikeurl = `http://localhost:5105/api/Post/like?likeid=${encodeURIComponent(likeid)}`;
+                        const unlikeurl =  `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
+
 
                         fetch(unlikeurl,{
                             method:'DELETE',
@@ -189,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function(){
             function likeCounter(){
                 let counter 
                 const postId = item.id
-                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}`
+                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
                 fetch(likeCount, {
                     method:'GET',
                     headers:{
@@ -197,9 +198,20 @@ document.addEventListener("DOMContentLoaded", function(){
                     }
                 })
 
-                .then(response => response.text())
-                .then(data => {count.textContent=data
-                    console.log(data.state);
+                .then(response => response.json())
+                .then(data => {count.textContent=data.count
+                    
+                    console.log(data);
+                    if (data.state === true){
+                        isLiked = true;
+                        likeIcon.classList.remove('far')
+                        likeIcon.classList.add('fas')
+                    }
+                    else if (data.state === false){
+                        isLiked = false;
+                        likeIcon.classList.remove('fas')
+                        likeIcon.classList.add('far')
+                    }
                 })
                 .catch(error => console.error(error))
                 
@@ -381,7 +393,8 @@ document.addEventListener("DOMContentLoaded", function(){
                         likeCounter();
 
                     } else {
-                        const unlikeurl = `http://localhost:5105/api/Post/like?likeid=${encodeURIComponent(likeid)}`;
+                        const unlikeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
+
 
                         fetch(unlikeurl,{
                             method:'DELETE',
@@ -435,7 +448,7 @@ document.addEventListener("DOMContentLoaded", function(){
             function likeCounter(){
                 let counter 
                 const postId = item.id
-                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}`
+                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
                 fetch(likeCount, {
                     method:'GET',
                     headers:{
@@ -443,9 +456,20 @@ document.addEventListener("DOMContentLoaded", function(){
                     }
                 })
 
-                .then(response => response.text())
-                .then(data => {count.textContent=data
-                    console.log(data.state);
+                .then(response => response.json())
+                .then(data => {count.textContent=data.count
+                    
+                    console.log(data);
+                    if (data.state === true){
+                        isLiked = true;
+                        likeIcon.classList.remove('far')
+                        likeIcon.classList.add('fas')
+                    }
+                    else if (data.state === false){
+                        isLiked = false;
+                        likeIcon.classList.remove('fas')
+                        likeIcon.classList.add('far')
+                    }
                 })
                 .catch(error => console.error(error))
                 
@@ -504,7 +528,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     // Function to get all posts and display them
     function getAllAndDisplayPosts() {
-        const apiEndpoint = '/api/Post';
+        const apiEndpoint = '/api/Post/byfollowers/' + userID;
 
         fetch(apiBaseUrl + apiEndpoint)
             .then(response => response.json())
@@ -624,7 +648,7 @@ document.addEventListener("DOMContentLoaded", function(){
                         likeCounter();
 
                     } else {
-                        const unlikeurl = `http://localhost:5105/api/Post/like?likeid=${encodeURIComponent(likeid)}`;
+                        const unlikeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
 
                         fetch(unlikeurl,{
                             method:'DELETE',
@@ -678,7 +702,7 @@ document.addEventListener("DOMContentLoaded", function(){
             function likeCounter(){
                 let counter 
                 const postId = item.id
-                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}`
+                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
                 fetch(likeCount, {
                     method:'GET',
                     headers:{
@@ -686,9 +710,20 @@ document.addEventListener("DOMContentLoaded", function(){
                     }
                 })
 
-                .then(response => response.text())
-                .then(data => {count.textContent=data
-                    console.log(data.state);
+                .then(response => response.json())
+                .then(data => {count.textContent=data.count
+                    
+                    console.log(data);
+                    if (data.state === true){
+                        isLiked = true;
+                        likeIcon.classList.remove('far')
+                        likeIcon.classList.add('fas')
+                    }
+                    else if (data.state === false){
+                        isLiked = false;
+                        likeIcon.classList.remove('fas')
+                        likeIcon.classList.add('far')
+                    }
                 })
                 .catch(error => console.error(error))
                 
