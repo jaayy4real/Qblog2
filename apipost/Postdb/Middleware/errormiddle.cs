@@ -29,7 +29,7 @@ public class Exceptionhandler : IMiddleware
 
             string json = JsonSerializer.Serialize(problem);
 
-            context.Response.ContentType = "application/json";
+            context.Response.ContentType = "application/problem+json";
 
             await context.Response.WriteAsync(json);
 
