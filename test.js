@@ -7,3 +7,9 @@
 
 const random = Math.round(Math.random() *6)+1
 console.log(random);
+
+try {
+    
+} catch (error) {
+    
+}

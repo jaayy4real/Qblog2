@@ -23,18 +23,21 @@ document.addEventListener('DOMContentLoaded', function () {
             body: JSON.stringify(userData), // Include the body in the request
         })
         .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+            if (!response.ok){
+                console.log(response.json().then(data => console.log(data)));
+                // throw new Error(`HTTP error! Status: ${response.status}`);
+                // console.error(response);
             }
-            return response.json();
+             response.json();
         })
         .then(data => {
             console.log('Registration successful:', data);
-            window.location.href = 'http://127.0.0.1:5500/successful.html'; // Redirect after successful registration
+
+            // window.location.href = 'http://127.0.0.1:5500/successful.html'; // Redirect after successful registration
         })
         .catch(error => {
             console.error('Error during registration:', error);
-            window.location.href = 'http://127.0.0.1:5500/error.html'
+            // window.location.href = 'http://127.0.0.1:5500/error.html'
             if (error.status === 400) {
                 return error.json().then(errorData => {
                     console.log('Validation errors:', errorData.errors);
