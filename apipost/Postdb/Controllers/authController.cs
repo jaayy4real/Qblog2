@@ -58,7 +58,7 @@ public class Authcontoller:ControllerBase{
 
         var response =  _auth.register(username,email,password);
 
-        return BadRequest(response);
+        return Ok(response);
     }
 
     [AllowAnonymous]
