@@ -110,7 +110,7 @@ namespace Postdb.data
         {
             var collect = mongoCollection<Likes>(colloctionname2);
 
-            var obj = collect.Find(x => x.Postid == postid && x.Userid==user);
+            var obj = collect.Find(x => x.Postid == postid && x.Userid==user).FirstOrDefault();
 
             if(obj != null){
 
