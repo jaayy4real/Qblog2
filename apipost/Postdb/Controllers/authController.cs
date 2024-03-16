@@ -71,7 +71,7 @@ public class Authcontoller:ControllerBase{
 
     }
 
-   
+     [Authorize]
      [HttpPost("api/follow")]
 
     public ActionResult followuser(string id,string followerid){
@@ -92,6 +92,7 @@ public class Authcontoller:ControllerBase{
         
     }
 
+  
     [HttpGet("api/follow")]
     public ActionResult followstate(string following,string userid){
 

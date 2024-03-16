@@ -54,10 +54,16 @@ public class Authuser : Iauth, Ifollow
     {
         var collect = getcollection<User>(collectionname);
 
-        var exist = collect.Find(u => u.username == username && u.password == password).FirstOrDefault();
+        var usern=Builders<User>.Filter.Eq(x=>x.username,username);
+        var pass=Builders<User>.Filter.Eq(x=>x.password,password);
+
+        var filter = Builders<User>.Filter.And(usern,pass);
+
+        //
+        var exist = collect.Find(filter).FirstOrDefault();
 
          if (exist != null)
-    {
+     {
         var token = key.gentoken(username,exist.email,exist.id);
 
         var response = new Responseuser(){
@@ -65,15 +71,13 @@ public class Authuser : Iauth, Ifollow
             refreshtoken=exist.RefreshToken,
             id=exist.id
         };
-
-        //reset refresh token
-        
-        return response;
-    }
+     
+         return response;
+     }
     else
-    {
+     {
         throw new Exception("username or password wrong");
-    }
+     }
 
     }
 
@@ -167,9 +171,17 @@ public class Authuser : Iauth, Ifollow
 
     public void follow(string id,string followerid)
     {
-        var follow = new Followers{userid=followerid,Id=ObjectId.GenerateNewId().ToString()};
-
         var collect = getcollection<User>(collectionname);
+
+        var isalreadyfollowing=collect.Find(x=>x.id==id).FirstOrDefault();
+
+        if(isalreadyfollowing.followers.Any(x=>x.userid==followerid)){
+
+            throw new Exception("already followed user");
+
+        }
+
+        var follow = new Followers{userid=followerid,Id=ObjectId.GenerateNewId().ToString()};
 
         var filter = Builders<User>.Filter.Eq(u=>u.id,id);
         var update = Builders<User>.Update.Push(u=>u.followers,follow);
@@ -208,6 +220,7 @@ public class Authuser : Iauth, Ifollow
             
         return new JwtSecurityTokenHandler().ValidateToken(token, Parameters, out _);
     }
+
 
     public bool followstate(string following, string user)
     {
