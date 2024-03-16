@@ -25,4 +25,11 @@
 // }
 // console.log(size);
 
-console.log(Error);
+// console.log(console.log);
+// console.debug(6)
+
+function add (a,b){
+    const sum = a + b;
+    return sum;
+}
+add(1,2)
