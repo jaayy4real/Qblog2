@@ -284,6 +284,7 @@ document.addEventListener('DOMContentLoaded', function(){
             followButton.style.backgroundColor = 'white'
             followButton.style.color = 'black'
             console.log('follow');
+            followState()
         }
         else{
 
@@ -305,6 +306,7 @@ document.addEventListener('DOMContentLoaded', function(){
             followButton.style.color = 'white'
             followButton.style.cursor = 'pointer'
             console.log('unfollow');
+            followState()
         }
         // console.log('clicked by me');
     })
@@ -316,6 +318,7 @@ document.addEventListener('DOMContentLoaded', function(){
         fetch(port + endpoints)
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             if(data === true){
                 isFollow = true;
                 followButton.innerText = 'Following'
