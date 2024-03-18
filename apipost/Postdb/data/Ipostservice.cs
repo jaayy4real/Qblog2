@@ -1,5 +1,6 @@
 using MongoDB.Driver;
 using Postdb.data;
+using Postdb.gmodel.post;
 using Postdb.model;
 
 public interface Ipost{
@@ -7,9 +8,18 @@ public interface Ipost{
    
     List<Post> getpost();
 
+    List<Post> Mostlikedpost();
+
+    List<Post> getpost(int page);
+
     List<Post> getpostuser(string id);
 
+    List<Post> getpostuser(string id,int page);
+
     List<Post> getpostbyfollowers(string id);
+
+    List<Post> getpostbyfollowers(string id,int page);
+
 
     Post GetsinglePost(string id);
 

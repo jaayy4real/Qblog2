@@ -41,4 +41,6 @@ namespace Postdb.gmodel.post
         public bool state{ get; set; }
 
     }
+
+     public record Result(string key,int total);
 }
