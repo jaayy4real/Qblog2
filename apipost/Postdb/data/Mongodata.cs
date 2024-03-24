@@ -211,21 +211,37 @@ namespace Postdb.data
 
         public List<Post> Mostlikedpost()
         {
-            throw new NotImplementedException();
+            var collect = mongoCollection<Post>(colloctionname);
+
+            var list = Mlikedpost(5);
+
+            var filter = Builders<Post>.Filter.In(x=>x.id,list);
+
+            return collect.Find(filter).ToList();
+            
         }
 
-        private List<Result> Mlikedpost(){
+        private List<string> Mlikedpost(int num){
              
              var collect = mongoCollection<Likes>(colloctionname2);
 
              var post = collect.Aggregate()
                                 .Group(x=>x.Postid,ac =>new Result(ac.Key,ac.Sum(u=>1)))
-                                .SortByDescending(r=>r.total).Limit(5).ToList();
-              //change 5 to a specified value                  
-            // var response = post.Select(x=>x.key).ToList();  get post id to lis also limt aggregate
-             return post;
+                                .SortByDescending(r=>r.total).Limit(num).ToList();
+                                
+             var response = post.Select(x=>x.key).ToList(); 
+
+             return response;
         }
 
-       
+        public List<Post> feedpost()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Post> feedpost(int page)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

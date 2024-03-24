@@ -10,6 +10,10 @@ public interface Ipost{
 
     List<Post> Mostlikedpost();
 
+    List<Post> feedpost();
+
+     List<Post> feedpost(int page);
+
     List<Post> getpost(int page);
 
     List<Post> getpostuser(string id);
