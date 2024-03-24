@@ -57,6 +57,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (!response.ok) {
                 throw new Error('Failed to fetch protected resource');
+            };
+
+            if(response.ok){
+                window.location.href='http://127.0.0.1:5500/profile-page.html'
             }
 
             const contentType = response.headers.get('content-type');

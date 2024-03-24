@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
             const usernames = document.createElement('p');
             usernames.classList.add('post-username');
-            usernames.textContent = `- posted by ${item.username}`;
+            usernames.textContent = `${item.username}`;
             console.log(item);
 
             usernames.addEventListener('click', function(){
@@ -235,8 +235,9 @@ document.addEventListener("DOMContentLoaded", function(){
             postHolder.addEventListener('mouseenter', likeCounter)
             body.appendChild(showMoreButton)
 
-            postHolder.appendChild(title);
             postHolder.appendChild(usernames);
+            postHolder.appendChild(title);
+            
             postHolder.appendChild(body);
             // postHolder.appendChild(showMoreButton)
             postHolder.appendChild(foot);
