@@ -63,11 +63,16 @@ namespace Postdb.data
         public List<Post> getpost()
         {
 
-
             var collect = mongoCollection<Post>(colloctionname);
 
-
             return collect.Find<Post>(_ => true).ToList();
+        }
+
+         public List<Post> getpost(int page)
+        {
+            var collect = mongoCollection<Post>(colloctionname);
+            int num = (page-1)*10;
+            return collect.Find<Post>(_ => true).Skip(num).Limit(10).ToList();
         }
 
         public List<Post> getpostuser(string id)
@@ -185,5 +190,42 @@ namespace Postdb.data
 
             //optimise this to trown an exception when list is null so the mongo query will not run
         }
+
+        public List<Post> getpostuser(string id, int page)
+        {
+            var collect = mongoCollection<Post>(colloctionname);
+            int num=(page-1)*10;
+            return collect.Find<Post>(x => x.Userid == id).Skip(num).Limit(10).ToList();
+        }
+
+        public List<Post> getpostbyfollowers(string userid, int page)
+        {
+           var list = getfollowerslist(userid);
+
+            var filter1 = Builders<Post>.Filter.In(x => x.Username, list);
+
+            var coll = mongoCollection<Post>(colloctionname);
+            int num =(page-1)*10;
+            return coll.Find(filter1).Skip(num).Limit(10).ToList();
+        }
+
+        public List<Post> Mostlikedpost()
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<Result> Mlikedpost(){
+             
+             var collect = mongoCollection<Likes>(colloctionname2);
+
+             var post = collect.Aggregate()
+                                .Group(x=>x.Postid,ac =>new Result(ac.Key,ac.Sum(u=>1)))
+                                .SortByDescending(r=>r.total).Limit(5).ToList();
+              //change 5 to a specified value                  
+            // var response = post.Select(x=>x.key).ToList();  get post id to lis also limt aggregate
+             return post;
+        }
+
+       
     }
 }
