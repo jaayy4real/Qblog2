@@ -135,43 +135,66 @@ document.addEventListener('DOMContentLoaded', function () {
             let isLiked = false; // Initial state of like
 
 
-            likeIcon.addEventListener('click', function() {
+            const likeClick = () =>{
                 // Toggle like state
-                const postID = item.id
-                const username = item.username
+                const postID = item.id;
+                const userID = localStorage.getItem('userID');
+                const username = item.username;
                 isLiked = !isLiked;
-                if (isLiked) {
-                    const likeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`
-                    
-                    fetch(likeurl, {
-                        method: 'POST',
-                        headers:{
-                            'Content-Type': 'application/json'
-                        },
-                        
-                    })
-                    .then(response => response.json())
-                    .then(data => {console.log(data);})
-                    .catch(error => console.error(error))
-                    likeIcon.classList.remove('far'); // Remove regular class
-                    likeIcon.classList.add('fas'); // Add solid class
-                    console.log('Liked post:', item.id);
 
-                } else {
-                    const unlikeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`
-                    fetch(unlikeurl, {
-                        method: 'POST',
-                        headers:{
-                            'Content-Type': 'application/json'
-                        },
-                        // body:JSON.stringify(details)
-                    })
-                    .catch(error => console.error(error))
-                    likeIcon.classList.remove('fas'); // Remove solid class
-                    likeIcon.classList.add('far'); // Add regular class
-                    console.log('Unliked post:', item.id);
+                try {
+                    if (isLiked === true) {
+                        const likeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
+
+                        fetch(likeurl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                        })
+                        .then(response => response.json() )
+                        .then(data => {
+                            likeid = data.likeid;
+                            
+                             
+                           // Pass status to handleState function
+                        })
+                        .catch(error => console.error(error));
+
+                        likeIcon.classList.remove('far'); // Remove regular class
+                        likeIcon.classList.add('fas'); // Add solid class
+                        console.log('Liked post:', item.id);
+                        likeCounter();
+
+                    } else if(isLiked === false){
+                        const unlikeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
+
+                        fetch(unlikeurl,{
+                            method:'DELETE',
+                            headers:{
+                                'Content-Type': 'application/json'
+                            },
+                        })
+                        .then(response => response.json())
+                        .then(data => {console.log(data);
+                            // status = data.state;
+                            // console.log(status); // Log status here
+                            // handleState(status); // Pass status to handleState function
+                        })
+                        .catch(error => console.error(error));
+
+                        likeIcon.classList.remove('fas'); // Remove solid class
+                        likeIcon.classList.add('far'); // Add regular class
+                        console.log('Unliked post:', item.id);
+                        likeCounter();
+                    }
+
+                } catch (error) {
+                    console.error(error);
                 }
-            });
+                // Pass status to handleState function
+            };
+            likeIcon.addEventListener('click', likeClick)
 
             function likeCounter(){
                 let counter 

@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const usernames = document.createElement('p');
             usernames.classList.add('post-username');
-            usernames.textContent = `- posted by ${item.username}`;
+            usernames.textContent = `${item.username}`;
             console.log(item);
 
             usernames.addEventListener('click', function(){
@@ -80,6 +80,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const foot = document.createElement('hr');
 
             let count =  document.createElement('p')
+          
+            // likes.textContent='likes'
+            count.classList.add('counting')
+            
             // count.textContent = likeCounter()
 
 
@@ -174,8 +178,10 @@ document.addEventListener('DOMContentLoaded', function () {
             
          
             
-
-
+            let likes = document.createElement('p')
+            
+            likes.classList.add('like-text')
+            // likes.textContent='like(s)'
             
             function likeCounter(){
                 let counter 
@@ -189,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
 
                 .then(response => response.json())
-                .then(data => {count.textContent=data.count
+                .then(data => {count.textContent=`${data.count}`
                     
                     console.log(data);
                     if (data.state === true){
@@ -202,6 +208,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         likeIcon.classList.remove('fas')
                         likeIcon.classList.add('far')
                     }
+
+                    if(data.count === '0' || data.count === '1'){
+                        likes.textContent='like'
+                    }
+                    else{
+                        likes.textContent='likes'
+                    }
                 })
                 .catch(error => console.error(error))
                 
@@ -212,8 +225,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
             likeCounter()
 
+           
 
-
+            const likeSpan = document.createElement('span')
+            likeSpan.classList.add('likes')
             const shareIcon = document.createElement('i');
             shareIcon.classList.add('fas', 'fa-share'); // Adjust classes for the share icon
             shareIcon.style.cursor = 'pointer'; // Add pointer cursor to indicate it's clickable
@@ -225,15 +240,27 @@ document.addEventListener('DOMContentLoaded', function () {
             postHolder.addEventListener('mouseenter', likeCounter)
             body.appendChild(showMoreButton)
 
-            postHolder.appendChild(title);
+
             postHolder.appendChild(usernames);
+            postHolder.appendChild(title);
+            
             postHolder.appendChild(body);
             // postHolder.appendChild(showMoreButton)
             postHolder.appendChild(foot);
-            postHolder.appendChild(likeIcon);
-            postHolder.appendChild(shareIcon);
-            postHolder.appendChild(count)
+            postHolder.appendChild(likeSpan)
+            likeSpan.appendChild(likeIcon)
+            likeSpan.appendChild(count)
+            likeSpan.appendChild(likes)
+
             
+
+            // postHolder.appendChild(likeSpan)
+            // postHolder.appendChild(likeSpan)
+            // likeSpan.appendChild(likeIcon);
+            // likeSpan.appendChild(count)
+            // postHolder.appendChild(shareIcon);
+            
+            // likeIcon.appendChild(count)
             
             // postHolder.appendChild(showMoreButton)
             
@@ -242,6 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
             dataList.appendChild(postHolder);
         });
     }
+    
 
 
 

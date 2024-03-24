@@ -5,10 +5,11 @@
     /* outline: 1px solid; */
     
 }
-/* body{
-    font-family: 'Poppins', sans-serif; */
-    /* overflow: hidden;
-} */
+body{
+    font-family: 'Poppins', sans-serif; 
+    
+    
+ }
 .navbar{
     display: flex;
     align-items: center;
@@ -188,8 +189,8 @@ ul{
 }
 .post-username{
     font-size: 12px;
-    font-family: "Great Vibes", cursive;
-  font-weight: 400;
+    
+  font-weight: 800;
   font-style: normal;
 }
 .post-main{

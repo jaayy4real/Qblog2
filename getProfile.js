@@ -288,16 +288,16 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else{
 
-            const url = `http://localhost:5105/api/follow?id=${encodeURIComponent(id)}&followerid=${encodeURIComponent(followerID)}`
+            const unfollow = `http://localhost:5105/api/follow?id=${encodeURIComponent(id)}&followerid=${encodeURIComponent(followerID)}`
 
-            fetch(url,{
-                method: 'POST',
+            fetch(unfollow,{
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token
                 }
             })
-            .then(response => response.status)
+            .then(response => response.json())
             .then(data => console.log(data))
             .catch(error => console.error(error))
 

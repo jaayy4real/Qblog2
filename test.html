@@ -3,39 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Active State Example</title>
+<title>Beautiful 3D Div</title>
 <style>
-    /* Style for the anchor element in its normal state */
-    a {
-        color: blue;
-        text-decoration: none;
+    .beautiful-div {
+        width: 300px;
+        height: 200px;
+        background: linear-gradient(145deg, #e0e0e0, #f6f6f6);
+        border-radius: 20px;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
+        position: relative;
+        perspective: 1000px;
     }
 
-    /* Style for the anchor element in its active state */
-    a:active {
-        color: yellow;
+    .beautiful-div::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        background: linear-gradient(145deg, #d5d5d5, #ffffff);
+        border-radius: 15px;
+        transform: rotateY(20deg) rotateX(20deg);
+        box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.05);
     }
 
-    /* Style for the button element in its normal state */
-    button {
-        background-color: #3498db;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
+    .beautiful-div::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.3), transparent);
+        border-radius: 20px;
     }
 
-    /* Style for the button element in its active state */
-    button:active {
-        background-color: #2980b9;
+    .content {
+        position: relative;
+        z-index: 1;
+        padding: 20px;
     }
 </style>
 </head>
 <body>
-    <!-- Anchor element example -->
-    <a href="#">Click me (Anchor)</a><br><br>
-
-    <!-- Button element example -->
-    <button>Click me (Button)</button>
+    <div class="beautiful-div">
+        <div class="content">
+            <h2>Beautiful 3D Div</h2>
+            <p>This is a more beautiful 3D div example.</p>
+        </div>
+    </div>
 </body>
 </html>
