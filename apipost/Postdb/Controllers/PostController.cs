@@ -126,7 +126,7 @@ public class Postcontroller:ControllerBase{
 
     }
     
-    [AllowAnonymous]
+     [AllowAnonymous]
      [HttpGet("api/Post/like")]
 
      public ActionResult likepostcount(string postid,string userid){
@@ -136,5 +136,16 @@ public class Postcontroller:ControllerBase{
 
     }
 
+    [AllowAnonymous]
+     [HttpGet("api/Post/mostliked")]
+
+     public ActionResult Mlikepost(){
+       
+      var response = posts.Mostlikedpost();
+      return Ok(response);
+
+    }
+
+    
 
 }

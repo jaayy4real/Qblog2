@@ -211,17 +211,34 @@ namespace Postdb.data
 
         public List<Post> Mostlikedpost()
         {
-            var collect = mongoCollection<Post>(colloctionname);
 
-            var list = Mlikedpost(5);
+            var list = test();
 
-            var filter = Builders<Post>.Filter.In(x=>x.id,list);
-
-            return collect.Find(filter).ToList();
+            return list;
             
         }
 
-        private List<string> Mlikedpost(int num){
+        private List<Post> test(){
+                  
+        var result = mongoCollection<Post>(colloctionname);
+        var result2 = mongoCollection<Likes>(colloctionname2);
+
+        var driver = result.AsQueryable()
+                           .GroupJoin(
+                            result2.AsQueryable(),
+                            x=>x.id,
+                            y=>y.Postid,
+                            (post,likes)=>new {Post=post,likecount=likes.Count()}
+                           ).OrderByDescending(x=>x.likecount)
+                           .Select(x=>x.Post)
+                           .Take(5)
+                           .ToList();
+
+            return driver;               
+
+        }
+
+        private List<Result> Mlikedpost(int num){
              
              var collect = mongoCollection<Likes>(colloctionname2);
 
@@ -229,14 +246,20 @@ namespace Postdb.data
                                 .Group(x=>x.Postid,ac =>new Result(ac.Key,ac.Sum(u=>1)))
                                 .SortByDescending(r=>r.total).Limit(num).ToList();
                                 
-             var response = post.Select(x=>x.key).ToList(); 
+            //  var response = post.Select(x=>x.key).ToList(); 
 
-             return response;
+            //  return response;
+            return post;
+
+            
+            // var filter = Builders<Post>.Filter.In(x=>x.id,list); for most liked post scattered version
+
+            // return collect.Find(filter).ToList();
         }
 
         public List<Post> feedpost()
         {
-            throw new NotImplementedException();
+           throw new NotImplementedException(); 
         }
 
         public List<Post> feedpost(int page)
