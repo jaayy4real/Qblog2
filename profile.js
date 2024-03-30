@@ -69,34 +69,44 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Function to display posts
+        // Function to display posts
     function displayData(data) {
-        const userText = document.getElementById('user-text');
-        userText.textContent = `${username}`
-
-        const identity = document.getElementById('identity');
-        // identity.textContent = `${id}`
-
         const dataList = document.getElementById('api-data-list');
         dataList.innerHTML = '';
 
         data.forEach(item => {
+            
+            // let postID = ''
+            // localStorage.setItem('getUser', item.userid)
+            // console.log(item.id);
+            
+
             const postHolder = document.createElement('section');
             postHolder.classList.add('post-holder'); // Adding class for styling
+
 
             const title = document.createElement('h3');
             title.classList.add('post-title');
             title.textContent = item.title;
 
+           
+
             const usernames = document.createElement('p');
             usernames.classList.add('post-username');
-            usernames.textContent = `- posted by ${item.username}`;
+            usernames.textContent = `${item.username}`;
             console.log(item);
+
+            usernames.addEventListener('click', function(){
+                localStorage.setItem('usernamePost', item.username)
+                localStorage.setItem('getUser', item.userid)
+                window.location.href = 'get-profile.html'
+            })
+
 
             const body = document.createElement('p');
             body.classList.add('post-main');
             body.style.display = 'inline-block';
             // body.textContent = item.body;
-
             const showMoreButton =  document.createElement('a')
             showMoreButton.classList.add('show-more')
             showMoreButton.style.color = 'red'
@@ -109,36 +119,41 @@ document.addEventListener('DOMContentLoaded', function () {
                 localStorage.setItem('username', item.username);
                 // alert(postID)
             })
-         
-                const truncated = item.body.substring(0,200)
+                 const truncated = item.body.substring(0,200)
               
                 body.textContent = `${truncated}...`
                 
                
                 showMoreButton.textContent= 'show more'
-                if(body.textContent.length < 200){
+                if(body.textContent.length < 100){
                     showMoreButton.style.display='none'
                     body.textContent = `${truncated}`
                 }
-                
-            // }
-            // body.textContent =item.body
 
             const foot = document.createElement('hr');
 
             let count =  document.createElement('p')
-            count.textContent = '0'
+          
+            // likes.textContent='likes'
+            count.classList.add('counting')
+            
+            // count.textContent = likeCounter()
+
+
 
             const likeIcon = document.createElement('i');
             likeIcon.classList.add('far', 'fa-heart'); // Using 'far' for regular Font Awesome icons
             likeIcon.style.cursor = 'pointer'; // Add pointer cursor to indicate it's clickable
-            let isLiked = false; // Initial state of like
+            let isLiked = false // Initial state of like
 
+            let likeid;
+            // let status; 
 
+            // let status; // Define status variable in an accessible scope
+                var status
             const likeClick = () =>{
                 // Toggle like state
                 const postID = item.id;
-                const userID = localStorage.getItem('userID');
                 const username = item.username;
                 isLiked = !isLiked;
 
@@ -155,9 +170,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         .then(response => response.json() )
                         .then(data => {
                             likeid = data.likeid;
-                            
-                             
-                           // Pass status to handleState function
+                             status = data.state;
+                             console.log(likeid);
+                              // Log status here
+                             // Pass status to handleState function
                         })
                         .catch(error => console.error(error));
 
@@ -166,9 +182,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         console.log('Liked post:', item.id);
                         likeCounter();
 
-                    } else if(isLiked === false){
+                    } else if (isLiked === false) {
                         const unlikeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
-
                         fetch(unlikeurl,{
                             method:'DELETE',
                             headers:{
@@ -176,10 +191,11 @@ document.addEventListener('DOMContentLoaded', function () {
                             },
                         })
                         .then(response => response.json())
-                        .then(data => {console.log(data);
+                        .then(data => {
+                            console.log(data);
+                            // logger.debug(data)
                             // status = data.state;
-                            // console.log(status); // Log status here
-                            // handleState(status); // Pass status to handleState function
+                             // Pass status to handleState function
                         })
                         .catch(error => console.error(error));
 
@@ -192,10 +208,34 @@ document.addEventListener('DOMContentLoaded', function () {
                 } catch (error) {
                     console.error(error);
                 }
-                // Pass status to handleState function
+     
             };
             likeIcon.addEventListener('click', likeClick)
 
+            // Access status outside the event listener function
+            // console.log(likeClick());
+            // status = likeClick;
+            console.log(status);
+
+            // function handleState(status) {
+            //     // Use the status variable here
+            //     console.log('Status:', status);
+            //     // Perform actions based on the status
+            // }
+            // handleState()
+
+
+            // Access status outside the event listener function
+            
+
+            
+         
+            
+            let likes = document.createElement('p')
+            
+            likes.classList.add('like-text')
+            // likes.textContent='like(s)'
+            
             function likeCounter(){
                 let counter 
                 const postId = item.id
@@ -208,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
 
                 .then(response => response.json())
-                .then(data => {count.textContent=data.count
+                .then(data => {count.textContent=`${data.count}`
                     
                     console.log(data);
                     if (data.state === true){
@@ -221,6 +261,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         likeIcon.classList.remove('fas')
                         likeIcon.classList.add('far')
                     }
+
+                    if(data.count === '0' || data.count === '1'){
+                        likes.textContent='like'
+                    }
+                    else{
+                        likes.textContent='likes'
+                    }
                 })
                 .catch(error => console.error(error))
                 
@@ -228,8 +275,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 return counter
                 
             }
+
             likeCounter()
 
+           
+
+            const likeSpan = document.createElement('span')
+            likeSpan.classList.add('likes')
             const shareIcon = document.createElement('i');
             shareIcon.classList.add('fas', 'fa-share'); // Adjust classes for the share icon
             shareIcon.style.cursor = 'pointer'; // Add pointer cursor to indicate it's clickable
@@ -237,16 +289,35 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Handle share action here
                 console.log('Shared post:', item.id);
             });
-             postHolder.addEventListener('mouseenter', likeCounter)
+
+            postHolder.addEventListener('mouseenter', likeCounter)
             body.appendChild(showMoreButton)
 
-            postHolder.appendChild(title);
+
             postHolder.appendChild(usernames);
+            postHolder.appendChild(title);
+            
             postHolder.appendChild(body);
+            // postHolder.appendChild(showMoreButton)
             postHolder.appendChild(foot);
-            postHolder.appendChild(likeIcon);
-            postHolder.appendChild(shareIcon);
-            postHolder.appendChild(count)
+            postHolder.appendChild(likeSpan)
+            likeSpan.appendChild(likeIcon)
+            likeSpan.appendChild(count)
+            likeSpan.appendChild(likes)
+
+            
+
+            // postHolder.appendChild(likeSpan)
+            // postHolder.appendChild(likeSpan)
+            // likeSpan.appendChild(likeIcon);
+            // likeSpan.appendChild(count)
+            // postHolder.appendChild(shareIcon);
+            
+            // likeIcon.appendChild(count)
+            
+            // postHolder.appendChild(showMoreButton)
+            
+            
 
             dataList.appendChild(postHolder);
         });

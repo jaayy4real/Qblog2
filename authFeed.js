@@ -3,16 +3,11 @@ document.addEventListener("DOMContentLoaded", function(){
     const following = document.getElementById('following')
     const forr = document.getElementById('for')
     const fol = document.getElementById('fol')
-    forYou.style.borderBottom = "2px solid"
-    let datalist = document.getElementById('api-data-list')
     const token = localStorage.getItem('token');
-
-     const apiBaseUrl = 'http://localhost:5105';
-
-    console.log(token);
+    const apiBaseUrl = 'http://localhost:5105';
     const userID = localStorage.getItem('userID');
-    const userna = localStorage.getItem('usename')
 
+     forYou.style.borderBottom = "2px solid"
     // Function to get all posts and display them
     function getAllAndDisplayPosts() {
         const apiEndpoint = '/api/Post';
@@ -25,16 +20,12 @@ document.addEventListener("DOMContentLoaded", function(){
 
     // Function to display posts
     function displayData(data) {
+
+
         const dataList = document.getElementById('api-data-list');
         dataList.innerHTML = '';
 
-        data.forEach(item => {
-            
-            // let postID = ''
-            // localStorage.setItem('getUser', item.userid)
-            // console.log(item.id);
-            
-
+        data.forEach(item => {                       
             const postHolder = document.createElement('section');
             postHolder.classList.add('post-holder'); // Adding class for styling
 
@@ -60,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function(){
             const body = document.createElement('p');
             body.classList.add('post-main');
             body.style.display = 'inline-block';
-            // body.textContent = item.body;
             const showMoreButton =  document.createElement('a')
             showMoreButton.classList.add('show-more')
             showMoreButton.style.color = 'red'
@@ -87,6 +77,10 @@ document.addEventListener("DOMContentLoaded", function(){
             const foot = document.createElement('hr');
 
             let count =  document.createElement('p')
+          
+            // likes.textContent='likes'
+            count.classList.add('counting')
+            
             // count.textContent = likeCounter()
 
 
@@ -94,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function(){
             const likeIcon = document.createElement('i');
             likeIcon.classList.add('far', 'fa-heart'); // Using 'far' for regular Font Awesome icons
             likeIcon.style.cursor = 'pointer'; // Add pointer cursor to indicate it's clickable
-            let isLiked = false; // Initial state of like
+            let isLiked = false // Initial state of like
 
             let likeid;
             // let status; 
@@ -108,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 isLiked = !isLiked;
 
                 try {
-                    if (isLiked) {
+                    if (isLiked === true) {
                         const likeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
 
                         fetch(likeurl, {
@@ -121,11 +115,9 @@ document.addEventListener("DOMContentLoaded", function(){
                         .then(data => {
                             likeid = data.likeid;
                              status = data.state;
-                             Promise.resolve(status)
-                             
-                            console.log(data.state);
-                            console.log(status); // Log status here
-                            handleState(status); // Pass status to handleState function
+                             console.log(likeid);
+                              // Log status here
+                             // Pass status to handleState function
                         })
                         .catch(error => console.error(error));
 
@@ -134,10 +126,8 @@ document.addEventListener("DOMContentLoaded", function(){
                         console.log('Liked post:', item.id);
                         likeCounter();
 
-                    } else {
-                        const unlikeurl =  `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
-
-
+                    } else if (isLiked === false) {
+                        const unlikeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
                         fetch(unlikeurl,{
                             method:'DELETE',
                             headers:{
@@ -146,9 +136,10 @@ document.addEventListener("DOMContentLoaded", function(){
                         })
                         .then(response => response.json())
                         .then(data => {
+                            console.log(data);
+                            // logger.debug(data)
                             // status = data.state;
-                            console.log(status); // Log status here
-                            handleState(status); // Pass status to handleState function
+                             // Pass status to handleState function
                         })
                         .catch(error => console.error(error));
 
@@ -161,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 } catch (error) {
                     console.error(error);
                 }
-                return handleState(status); // Pass status to handleState function
+     
             };
             likeIcon.addEventListener('click', likeClick)
 
@@ -170,12 +161,12 @@ document.addEventListener("DOMContentLoaded", function(){
             // status = likeClick;
             console.log(status);
 
-            function handleState(status) {
-                // Use the status variable here
-                console.log('Status:', status);
-                // Perform actions based on the status
-            }
-            handleState()
+            // function handleState(status) {
+            //     // Use the status variable here
+            //     console.log('Status:', status);
+            //     // Perform actions based on the status
+            // }
+            // handleState()
 
 
             // Access status outside the event listener function
@@ -184,8 +175,10 @@ document.addEventListener("DOMContentLoaded", function(){
             
          
             
-
-
+            let likes = document.createElement('p')
+            
+            likes.classList.add('like-text')
+            // likes.textContent='like(s)'
             
             function likeCounter(){
                 let counter 
@@ -199,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 })
 
                 .then(response => response.json())
-                .then(data => {count.textContent=data.count
+                .then(data => {count.textContent=`${data.count}`
                     
                     console.log(data);
                     if (data.state === true){
@@ -212,6 +205,13 @@ document.addEventListener("DOMContentLoaded", function(){
                         likeIcon.classList.remove('fas')
                         likeIcon.classList.add('far')
                     }
+
+                    if(data.count === '0' || data.count === '1'){
+                        likes.textContent='like'
+                    }
+                    else{
+                        likes.textContent='likes'
+                    }
                 })
                 .catch(error => console.error(error))
                 
@@ -222,8 +222,10 @@ document.addEventListener("DOMContentLoaded", function(){
 
             likeCounter()
 
+           
 
-
+            const likeSpan = document.createElement('span')
+            likeSpan.classList.add('likes')
             const shareIcon = document.createElement('i');
             shareIcon.classList.add('fas', 'fa-share'); // Adjust classes for the share icon
             shareIcon.style.cursor = 'pointer'; // Add pointer cursor to indicate it's clickable
@@ -235,16 +237,27 @@ document.addEventListener("DOMContentLoaded", function(){
             postHolder.addEventListener('mouseenter', likeCounter)
             body.appendChild(showMoreButton)
 
+
             postHolder.appendChild(usernames);
             postHolder.appendChild(title);
             
             postHolder.appendChild(body);
             // postHolder.appendChild(showMoreButton)
             postHolder.appendChild(foot);
-            postHolder.appendChild(likeIcon);
-            postHolder.appendChild(shareIcon);
-            postHolder.appendChild(count)
+            postHolder.appendChild(likeSpan)
+            likeSpan.appendChild(likeIcon)
+            likeSpan.appendChild(count)
+            likeSpan.appendChild(likes)
+
             
+
+            // postHolder.appendChild(likeSpan)
+            // postHolder.appendChild(likeSpan)
+            // likeSpan.appendChild(likeIcon);
+            // likeSpan.appendChild(count)
+            // postHolder.appendChild(shareIcon);
+            
+            // likeIcon.appendChild(count)
             
             // postHolder.appendChild(showMoreButton)
             
@@ -278,7 +291,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
         fetch(apiBaseUrl + apiEndpoint)
             .then(response => response.json())
-            .then(data => displayData(data))
+            .then(data => {displayData(data)
+            })
             .catch(error => console.error('Error fetching data:', error));
     }
 
@@ -533,7 +547,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
         fetch(apiBaseUrl + apiEndpoint)
             .then(response => response.json())
-            .then(data => displayData(data))
+            .then(data => {displayData(data)
+                console.log(data);
+            })
             .catch(error => console.error('Error fetching data:', error));
     }
 
@@ -789,7 +805,7 @@ document.addEventListener("DOMContentLoaded", function(){
     const backgroundColors = ['#124076','#114232','#6420AA', '#35374B', '#344955', '#333A73', '#070F2B', '#561C24']
     const random = Math.round(Math.random() *7)+1
 
-    initial.style.backgroundColor = backgroundColors[random]
+    // initial.style.backgroundColor = backgroundColors[random]
 
     async function getIdentity() {
         const apiBaseUrl = 'http://localhost:5105';
@@ -825,8 +841,8 @@ document.addEventListener("DOMContentLoaded", function(){
         let username;
        getIdentity()
        .then(data => {
-        pageUser.textContent= data.name
-        initial.textContent = data.name[0]
+        // pageUser.textContent= data.name
+        // initial.textContent = data.name[0]
         console.log(data.name);
         username = data.name
         console.log('Protected Resource Data', data);

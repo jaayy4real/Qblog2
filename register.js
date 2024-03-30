@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const loader = document.getElementById('loader');
 
     document.getElementById('register-button').onclick = function () {
-        loader.style.display = 'block'; // Show loader when sign-up button is clicked
+        // loader.style.display = 'block'; // Show loader when sign-up button is clicked
 
         const usernameInput = document.getElementById('username-input').value;
         const emailInput = document.getElementById('email-input').value;

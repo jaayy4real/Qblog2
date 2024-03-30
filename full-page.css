@@ -68,3 +68,23 @@ ul{
     line-height: 2rem;
     word-spacing: 0.3rem;
 }
+
+footer{
+    margin-top: 5rem;
+    border: 1px solid gray;
+    /* width: 90%; */
+    
+}
+.foot{
+    margin:1rem 18rem 1rem 18rem ;
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+
+    
+}
+.foot a{
+    /* margin-left: 17px; */
+    display: flex;
+    color: #555;
+}
