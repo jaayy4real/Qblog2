@@ -211,21 +211,82 @@ namespace Postdb.data
 
         public List<Post> Mostlikedpost()
         {
-            throw new NotImplementedException();
+
+            var list = test();
+
+            return list;
+            
         }
 
-        private List<Result> Mlikedpost(){
+        private List<Post> test(){
+                  
+        var result = mongoCollection<Post>(colloctionname);
+        var result2 = mongoCollection<Likes>(colloctionname2);
+
+        var driver = result.AsQueryable()
+                           .GroupJoin(
+                            result2.AsQueryable(),
+                            x=>x.id,
+                            y=>y.Postid,
+                            (post,likes)=>new {Post=post,likecount=likes.Count()}
+                           ).OrderByDescending(x=>x.likecount)
+                           .Select(x=>x.Post)
+                           .Take(5)
+                           .ToList();
+
+            return driver;               
+
+        }
+
+        private List<Result> Mlikedpost(int num){
              
              var collect = mongoCollection<Likes>(colloctionname2);
 
              var post = collect.Aggregate()
                                 .Group(x=>x.Postid,ac =>new Result(ac.Key,ac.Sum(u=>1)))
-                                .SortByDescending(r=>r.total).Limit(5).ToList();
-              //change 5 to a specified value                  
-            // var response = post.Select(x=>x.key).ToList();  get post id to lis also limt aggregate
-             return post;
+                                .SortByDescending(r=>r.total).Limit(num).ToList();
+                                
+            //  var response = post.Select(x=>x.key).ToList(); 
+
+            //  return response;
+            return post;
+
+            
+            // var filter = Builders<Post>.Filter.In(x=>x.id,list); for most liked post scattered version
+
+            // return collect.Find(filter).ToList();
         }
 
-       
+        public List<Post> feedpost()
+        {
+           throw new NotImplementedException(); 
+        }
+
+        public List<Post> feedpost(int page)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<string> Feedback(string body)
+        {
+            var connect = new MongoClient(_connect.MongoDbConnectionString);
+            var db = connect.GetDatabase("feedback");
+            var collect =db.GetCollection<Feedbck>("feedbacks");
+
+            var response = new Feedbck{username="Anonymous",body=body,date=DateTime.UtcNow};
+
+            await collect.InsertOneAsync(response);
+
+            return "sucess";
+            
+        }
+
+        private class Feedbck{
+
+        public string? username{get;set;}
+        public string? body{get;set;}
+        public DateTime date{get;set;}
+
+        }
     }
 }
