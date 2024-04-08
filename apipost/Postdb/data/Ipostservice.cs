@@ -35,6 +35,7 @@ public interface Ipost{
 
     public UpdateResult updatepost1(string id,string title,string body);
 
+    public Task<string> Feedback(string body);
 
 }
 

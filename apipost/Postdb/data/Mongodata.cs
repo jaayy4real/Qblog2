@@ -266,5 +266,27 @@ namespace Postdb.data
         {
             throw new NotImplementedException();
         }
+
+        public async Task<string> Feedback(string body)
+        {
+            var connect = new MongoClient(_connect.MongoDbConnectionString);
+            var db = connect.GetDatabase("feedback");
+            var collect =db.GetCollection<Feedbck>("feedbacks");
+
+            var response = new Feedbck{username="Anonymous",body=body,date=DateTime.UtcNow};
+
+            await collect.InsertOneAsync(response);
+
+            return "sucess";
+            
+        }
+
+        private class Feedbck{
+
+        public string? username{get;set;}
+        public string? body{get;set;}
+        public DateTime date{get;set;}
+
+        }
     }
 }

@@ -95,6 +95,18 @@ public class Postcontroller:ControllerBase{
 
     }
 
+   [AllowAnonymous]
+   [HttpPost ("api/feedback/")]
+    public ActionResult feedback([FromBody]string body){
+
+         var response = posts.Feedback(body);
+
+         ilogger.LogInformation("anonymous successfully user posted a feedback");
+         
+          return Ok(response);
+
+    }
+
      
      [HttpDelete ("api/Post/")]
     public ActionResult deletepost(string id){
