@@ -6,28 +6,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const userID = localStorage.getItem('userID');
     const userna = localStorage.getItem('usename')
 
-    // Function to get all posts and display them
-    function getAllAndDisplayPosts() {
-        const apiEndpoint = '/api/Post';
+    function fetchAndDisplayPosts() {
+        const endpoint = '/api/Post';
 
-        fetch(apiBaseUrl + apiEndpoint)
+        fetch(apiBaseUrl + endpoint)
             .then(response => response.json())
-            .then(data => displayData(data))
-            .catch(error => console.error('Error fetching data:', error));
+            .then(displayData)
+            .catch(error => console.error(error));
     }
-
+// fetchAndDisplayPosts()
     // Function to display posts
     function displayData(data) {
         const dataList = document.getElementById('api-data-list');
         dataList.innerHTML = '';
 
         data.forEach(item => {
-            
-            // let postID = ''
-            // localStorage.setItem('getUser', item.userid)
-            // console.log(item.id);
-            
-
             const postHolder = document.createElement('section');
             postHolder.classList.add('post-holder'); // Adding class for styling
 
@@ -98,135 +91,95 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // let status; // Define status variable in an accessible scope
                 var status
-            const likeClick = () =>{
-                // Toggle like state
-                const postID = item.id;
-                const username = item.username;
+            const likeClick = () => {
+                // Toggle the value of 'isLiked' boolean variable
                 isLiked = !isLiked;
+                console.log(`The value of isLiked is now: ${isLiked}`);
 
-                try {
-                    if (isLiked === true) {
-                        const likeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
+                // If the post is liked, make a POST request to the '/like' endpoint
+                if (isLiked) {
+                    const postId = item.id;
+                    console.log(`The post ID being liked is: ${postId}`);
 
-                        fetch(likeurl, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                        })
-                        .then(response => response.json() )
-                        .then(data => {
-                            likeid = data.likeid;
-                             status = data.state;
-                             console.log(likeid);
-                              // Log status here
-                             // Pass status to handleState function
-                        })
-                        .catch(error => console.error(error));
+                    const likeUrl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`;
+                    console.log(`The URL being used for the POST request is: ${likeUrl}`);
 
-                        likeIcon.classList.remove('far'); // Remove regular class
-                        likeIcon.classList.add('fas'); // Add solid class
-                        console.log('Liked post:', item.id);
-                        likeCounter();
-
-                    } else if (isLiked === false) {
-                        const unlikeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
-                        fetch(unlikeurl,{
-                            method:'DELETE',
-                            headers:{
-                                'Content-Type': 'application/json'
-                            },
-                        })
+                    fetch(likeUrl, {
+                        method: 'POST'
+                    })
                         .then(response => response.json())
                         .then(data => {
-                            console.log(data);
-                            // logger.debug(data)
-                            // status = data.state;
-                             // Pass status to handleState function
+                            likeid = data.likeid;
+                            console.log(`The ID of the new like is: ${likeid}`);
                         })
                         .catch(error => console.error(error));
 
-                        likeIcon.classList.remove('fas'); // Remove solid class
-                        likeIcon.classList.add('far'); // Add regular class
-                        console.log('Unliked post:', item.id);
-                        likeCounter();
-                    }
+                    likeIcon.classList.replace('far', 'fas');
+                    console.log('Liked post:', postId);
+                    likeCounter();
 
-                } catch (error) {
-                    console.error(error);
+                // If the post is unliked, make a DELETE request to the '/like' endpoint
+                } else {
+                    const postId = item.id;
+                    console.log(`The post ID being unliked is: ${postId}`);
+
+                    const unlikeUrl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`;
+                    console.log(`The URL being used for the DELETE request is: ${unlikeUrl}`);
+
+                    fetch(unlikeUrl, {
+                        method: 'DELETE'
+                    })
+                        .catch(error => console.error(error));
+
+                    likeIcon.classList.replace('fas', 'far');
+                    console.log('Unliked post:', postId);
+                    likeCounter();
                 }
-     
             };
             likeIcon.addEventListener('click', likeClick)
-
-            // Access status outside the event listener function
-            // console.log(likeClick());
-            // status = likeClick;
-            console.log(status);
-
-            // function handleState(status) {
-            //     // Use the status variable here
-            //     console.log('Status:', status);
-            //     // Perform actions based on the status
-            // }
-            // handleState()
-
-
-            // Access status outside the event listener function
-            
-
-            
-         
             
             let likes = document.createElement('p')
             
             likes.classList.add('like-text')
             // likes.textContent='like(s)'
             
-            function likeCounter(){
-                let counter 
-                const postId = item.id
-                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
-                fetch(likeCount, {
-                    method:'GET',
-                    headers:{
+            function likeCounter() {
+                const postId = item.id;
+                const likeCountUrl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`;
+
+                fetch(likeCountUrl, {
+                    method: 'GET',
+                    headers: {
                         'Content-Type': 'application/json'
                     }
-                })
+                }).then(response => response.json())
+                    .then(data => {
+                        count.textContent = `${data.count}`;
 
-                .then(response => response.json())
-                .then(data => {count.textContent=`${data.count}`
-                    
-                    console.log(data);
-                    if (data.state === true){
-                        isLiked = true;
-                        likeIcon.classList.remove('far')
-                        likeIcon.classList.add('fas')
-                    }
-                    else if (data.state === false){
-                        isLiked = false;
-                        likeIcon.classList.remove('fas')
-                        likeIcon.classList.add('far')
-                    }
+                        if (data.state) {
+                            isLiked = true;
+                            likeIcon.classList.remove('far');
+                            likeIcon.classList.add('fas');
+                        } else {
+                            isLiked = false;
+                            likeIcon.classList.remove('fas');
+                            likeIcon.classList.add('far');
+                        }
 
-                    if(data.count === '0' || data.count === '1'){
-                        likes.textContent='like'
-                    }
-                    else{
-                        likes.textContent='likes'
-                    }
-                })
-                .catch(error => console.error(error))
-                
-                
-                return counter
-                
+                        if (data.count === 0 || data.count === 1) {
+                            likes.textContent = 'like';
+                        } else {
+                            likes.textContent = 'likes';
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
             }
 
             likeCounter()
 
-           
-
+           function creaatePostElement(){
             const likeSpan = document.createElement('span')
             likeSpan.classList.add('likes')
             const shareIcon = document.createElement('i');
@@ -245,28 +198,15 @@ document.addEventListener('DOMContentLoaded', function () {
             postHolder.appendChild(title);
             
             postHolder.appendChild(body);
-            // postHolder.appendChild(showMoreButton)
             postHolder.appendChild(foot);
             postHolder.appendChild(likeSpan)
             likeSpan.appendChild(likeIcon)
             likeSpan.appendChild(count)
-            likeSpan.appendChild(likes)
-
-            
-
-            // postHolder.appendChild(likeSpan)
-            // postHolder.appendChild(likeSpan)
-            // likeSpan.appendChild(likeIcon);
-            // likeSpan.appendChild(count)
-            // postHolder.appendChild(shareIcon);
-            
-            // likeIcon.appendChild(count)
-            
-            // postHolder.appendChild(showMoreButton)
-            
-            
-
+            likeSpan.appendChild(likes)        
             dataList.appendChild(postHolder);
+           }
+
+            creaatePostElement()
         });
     }
     
@@ -274,5 +214,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Call getAllAndDisplayPosts after the page is loaded
-    getAllAndDisplayPosts();
+    fetchAndDisplayPosts();
 });

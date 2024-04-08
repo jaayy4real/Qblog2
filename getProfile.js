@@ -6,28 +6,28 @@ document.addEventListener('DOMContentLoaded', function(){
     const id = localStorage.getItem('getUser');
     console.log(id);
 
-    const myProfile = ()=>{
-        const userID = localStorage.getItem('userID');
-        if(userID === id){
-            window.location.href = 'http://127.0.0.1:5500/profile-page.html'
-        }
-    }
+    const myProfile = () =>
+        localStorage.getItem('userID') === id &&
+        (window.location.href = 'http://127.0.0.1:5500/profile-page.html');
     myProfile()
 
 
 
     const port = 'http://localhost:5105'
     const endPoint =`/api/page/${id}`
-    fetch(port + endPoint)
-    .then(response => response.json())
-    .then(data =>{
-        const post = data.post
-        displayData(post)
-        console.log(post);
-    console.log(data.post);
-    } )
-    .catch(error =>{console.error(error);})
-   
+    const getPosts = () =>{
+        fetch(port + endPoint)
+        .then(response => response.json())
+        .then(data =>{
+            const post = data.post
+            displayData(post)
+            console.log(post);
+            console.log(data.post);
+        } )
+        .catch(error =>{console.error(error);})
+    }
+    getPosts()
+
     function displayData(post) {
         const dataList = document.getElementById('api-data-list');
         dataList.innerHTML = '';
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
             const usernames = document.createElement('p');
             usernames.classList.add('post-username');
-            usernames.textContent = `- posted by ${item.username}`;
+            usernames.textContent = item.username;
             console.log(item);
 
             usernames.addEventListener('click', function(){
@@ -182,6 +182,9 @@ document.addEventListener('DOMContentLoaded', function(){
             // Access status outside the event listener function
             
 
+            let likes = document.createElement('p')
+            
+            likes.classList.add('like-text')
             
          
             
@@ -215,6 +218,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         likeIcon.classList.remove('fas')
                         likeIcon.classList.add('far')
                     }
+                     likes.textContent=data.count === '0' || data.count === '1' ? 'like' : 'likes'
                 })
                 .catch(error => console.error(error))
                 
@@ -227,6 +231,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 
+            function creaatePostElement(){
+            const likeSpan = document.createElement('span')
+            likeSpan.classList.add('likes')
             const shareIcon = document.createElement('i');
             shareIcon.classList.add('fas', 'fa-share'); // Adjust classes for the share icon
             shareIcon.style.cursor = 'pointer'; // Add pointer cursor to indicate it's clickable
@@ -238,22 +245,22 @@ document.addEventListener('DOMContentLoaded', function(){
             postHolder.addEventListener('mouseenter', likeCounter)
             body.appendChild(showMoreButton)
 
-            postHolder.appendChild(title);
-            postHolder.appendChild(usernames);
-            postHolder.appendChild(body);
-            // postHolder.appendChild(showMoreButton)
-            postHolder.appendChild(foot);
-            postHolder.appendChild(likeIcon);
-            postHolder.appendChild(shareIcon);
-            postHolder.appendChild(count)
-            
-            
-            // postHolder.appendChild(showMoreButton)
-            
-            
 
+            postHolder.appendChild(usernames);
+            postHolder.appendChild(title);
+            
+            postHolder.appendChild(body);
+            postHolder.appendChild(foot);
+            postHolder.appendChild(likeSpan)
+            likeSpan.appendChild(likeIcon)
+            likeSpan.appendChild(count)
+            likeSpan.appendChild(likes)        
             dataList.appendChild(postHolder);
+           }
+
+            creaatePostElement()
         });
+
     }
 
 

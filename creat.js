@@ -32,12 +32,8 @@ document.addEventListener('DOMContentLoaded', function () {
             body: body,
         };
 
-    async function makeRequest() {
         const token = localStorage.getItem("token");
         const refreshToken = localStorage.getItem("refresh");
-        const expjwt = token;
-        console.log(expjwt, refreshToken);
-
         try {
             const response = await fetch(apiBaseUrl + '/api/Post', {
                 method: 'POST',
@@ -49,43 +45,15 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             if (response.status === 401) {
-                const newAccessToken = await refreshTokenSwitch(expjwt, refreshToken);
-                localStorage.setItem('token', newAccessToken);
-                // Retry the original request with the new access token
-                return makeRequest(); // Corrected: This makes a recursive call
+                localStorage.setItem('token', await refreshTokenSwitch(token, refreshToken));
+                return saveContent(); // Recursive call
             }
 
-            if (!response.ok) {
-                throw new Error('Failed to fetch protected resource');
-            };
-
-            if(response.ok){
-                window.location.href='http://127.0.0.1:5500/profile-page.html'
-            }
-
-            const contentType = response.headers.get('content-type');
-            if (contentType && contentType.includes('application/json')) {
-                const data = await response.json();
-                return data;
-            } else {
-                const text = await response.text(); // Get non-JSON response as text
-                console.log('Non-JSON response:', text);
-                return null; // or handle non-JSON response as needed
-            }
-        } catch (error) {
-            console.error('Error making protected request', error);
-            throw error;
-        }
-    }
-
-
-        try {
-            const data = await makeRequest();
-            console.log('Protected Resource data');
+            if (!response.ok) throw new Error('Failed to fetch protected resource');
+            if(response.ok) window.location.href='http://127.0.0.1:5500/profile-page.html';
         } catch (error) {
             console.error('Error making protected request', error);
         }
-        
     }
 
     // Attach saveContent function to the click event of the save button

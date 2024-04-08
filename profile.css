@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* outline: 1px solid; */
     
 }
  body{
@@ -21,7 +20,6 @@
     width: 100%;
     border: 1px solid;
     background-color: white;
-    /* opacity: 30%; */
 }
 nav{
     flex: 1;
@@ -47,24 +45,16 @@ ul{
     list-style-type: none;
 }
 .sign-up a{
-    /* border: 1px solid; */
     padding: 10px 24px;
     border-radius: 24px;
     background-color:black;
-    
-    
-    
 }
 
 .container-2{
-    /* margin-top: 5%; */
     padding-top: 5%;
-    /* margin-left: 5rem; */
-    /* margin-right: 5rem; */
     display: flex;
     border: 1px solid gray;
     height: 100vh;
-    /* border-left: 0px; */
     width: 27rem;
     align-content: center;
     justify-content: center;
@@ -72,20 +62,13 @@ ul{
     left: 0;
     position: sticky;
 }
-.container-3{
-    /* width: 50%; */
-}
 .top{
     width: 15rem;
     margin-top: 5rem;
     justify-content: center;
-    /* align-items: center; */
-    /* border: 1px solid;; */
-    /* align-self: center; */
 }
 .carry{
     display: flex;
-    /* justify-content: center; */
 }
 .follow{
     display: flex;
@@ -101,9 +84,6 @@ ul{
     background-color: black;
     color: white;
     margin-top: 2rem;
-    /* border-radius: 5px; */
-    
-    
 }
 .top h1{
     text-align: center;
@@ -139,7 +119,6 @@ ul{
 }
 
 .post-holder{
-    /* outline: 1px solid; */
     width: 50rem;
     min-height: 7rem;
     align-self: center;
@@ -148,13 +127,8 @@ ul{
     border-radius: 10px;
     background-color: white;
     position: relative;
-    margin-left: 1rem;
-    /* margin-left: 7%; */
-    
+    margin-left: 1rem;    
 }
-
-
-
 .post-title{
     margin-top: 0.5rem;
   font-family: "DM Sans", sans-serif;
@@ -163,8 +137,7 @@ ul{
   font-style: normal;
 }
 .post-username{
-    font-size: 12px;
-    /* font-family: "Great Vibes", cursive; */
+  font-size: 12px;
   font-weight: 700;
   font-style: normal;
 }
@@ -175,16 +148,6 @@ ul{
   margin-top: 0.3rem;
   margin-bottom: 0.6rem;
 }
-/* .fa-heart{
-    margin-top: 0.5rem;
-}
-.fa-share{
-    margin-left: 0.4rem;
-} */
-
-
-/* Post holder */
-
 
 .profile-nav{
     /* border: 1px solid; */

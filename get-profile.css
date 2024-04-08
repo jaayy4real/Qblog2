@@ -2,13 +2,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* outline: 1px solid; */
     
 }
-/* body{
-    font-family: 'Poppins', sans-serif; */
-    /* overflow: hidden;
-} */
+body{
+    font-family: 'Poppins', sans-serif; 
+    overflow: hidden; 
+}
 .navbar{
     display: flex;
     align-items: center;
@@ -20,7 +19,6 @@
     width: 100%;
     border: 1px solid;
     background-color: white;
-    /* opacity: 30%; */
 }
 nav{
     flex: 1;
@@ -46,20 +44,13 @@ ul{
     list-style-type: none;
 }
 .sign-up a{
-    /* border: 1px solid; */
     padding: 10px 24px;
     border-radius: 24px;
     background-color:black;
-    
-    
-    
 }
 
 .container-2{
-    /* margin-top: 5%; */
     padding-top: 5%;
-    /* margin-left: 5rem; */
-    /* margin-right: 5rem; */
     display: flex;
     border: 1px solid;
     height: 100vh;
@@ -78,9 +69,6 @@ ul{
     width: 15rem;
     margin-top: 5rem;
     justify-content: center;
-    /* align-items: center; */
-    /* border: 1px solid;; */
-    /* align-self: center; */
 }
 .carry{
     display: flex;
@@ -100,9 +88,6 @@ ul{
     color: white;
     margin-top: 2rem;
     border-radius: 19px;
-    /* border-radius: 5px; */
-    
-    
 }
 .top h1{
     text-align: center;
@@ -176,37 +161,27 @@ ul{
 }
 
 
-/* Post holder */
+
 #api-data-list .post-holder{
- /* position:relative; */
- /* left:-200px; */
- /* transform:translatex(-87px) translatey(-7px); */
-  /* transform:translatex(194px) translatey(-8px); */
  border-top-left-radius:0px;
  border-right-width:1px;
  justify-content: center;
- /* transform:translatex(168px) translatey(-5px); */
-
 }
 
 .profile-nav{
-    /* border: 1px solid; */
     z-index: 1000;
     position: sticky;
     width: 100%;
     background-color: white;
     top: 1rem;
     height: 4rem;
-    
     width: inherit;
-  
 }
 
 #api-data-list{
     justify-content: center;
     display: flex;
     flex-direction: column;
-    /* margin-top: 7.5rem; */
 }
 
 .container-4{
@@ -228,10 +203,5 @@ ul{
     font-size: 23px;
     font-weight: 700;
     letter-spacing: 0.1cap;
-    /* background-color: black; */
-    /* color: white; */
     margin-top: 2rem;
-    /* border-radius: 5px; */
-    
-    
 }

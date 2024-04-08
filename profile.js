@@ -34,6 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 throw new Error('Failed to fetch protected resource')
             }
             const data  = await response.json()
+            const userText = document.getElementById('user-text')
+            userText.textContent = data.name
             return data
         } catch (error) {
             console.error('Error making protected request')

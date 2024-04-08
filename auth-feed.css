@@ -227,16 +227,17 @@ ul{
 }
 
 .circle{
-    display: flex;
+    /* display: flex; */
     border: 1px solid;
     height: 50px;
     width: 50px;
     border-radius: 50%;
     justify-content: center;
+    align-content: center;
     align-items: center;
     font-size: 25px;
     font-family:'Times New Roman', Times, serif;
-    background-color: #5E1675;
+    /* background-color: #5E1675; */
     color: white;
 
 }
@@ -305,4 +306,23 @@ ul{
     font-size: 13px;
     align-self: center;
    
+}
+#page-user{
+    /* border: 1px solid; */
+    /* padding: 5px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    /* margin-top: 6px; */
+    /* margin-left: 5rem; */
+    /* justify-content: center; */
+}
+#init{
+    font-size: 20px;
+    color: white;
+    text-align: center;
+    align-self: center;
+    justify-content: center;
+    /* margin-top: 25%; */
 }
