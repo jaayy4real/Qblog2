@@ -23,14 +23,10 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.setItem('token', data.token);
             localStorage.setItem('refresh', data.refreshtoken)
             localStorage.setItem('userID', data.id)
-            alert(data.username , data.refreshtoken)
-            // localStorage.setItem('id', data.id)
-            // console.log('Login successful:', data);
+           
             window.location.href = 'http://127.0.0.1:5500/auth-feed.html'
             console.log(data);
-            // return data
-            // Handle successful login
-            // You can add further logic here to handle the successful login
+         
         })
     
         .catch(error => {

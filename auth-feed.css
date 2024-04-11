@@ -16,6 +16,9 @@ body{
     left: 0;
     width: 100%;
     border: 1px solid;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
     background-color: white;
 }
 nav{
