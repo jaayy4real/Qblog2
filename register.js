@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const usernameInput = document.getElementById('username-input').value;
         const emailInput = document.getElementById('email-input').value;
         const passwordInput = document.getElementById('password-input').value;
-        const url = `http://localhost:5105/api/register?username=${encodeURIComponent(usernameInput)}&email=${encodeURIComponent(emailInput)}&password=${encodeURIComponent(passwordInput)}`;
+        const url = `https://qblog108.azurewebsites.net/api/register?username=${encodeURIComponent(usernameInput)}&email=${encodeURIComponent(emailInput)}&password=${encodeURIComponent(passwordInput)}`;
 
         const userData = {
             username: usernameInput,
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(data => {
          
-                window.location.href = 'http://127.0.0.1:5500/successful.html';
+                window.location.href = 'https://jaayy4real.github.io/Qblog2/successful.html';
                
            
                 console.log('Registration successful:', data);

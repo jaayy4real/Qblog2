@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 
-    const port = 'http://localhost:5105'
+    const port = 'https://qblog108.azurewebsites.net'
     const endPoint =`/api/page/${id}`
     const getPosts = () =>{
         fetch(port + endPoint)
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 try {
                     if (isLiked === true) {
-                        const likeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
+                        const likeurl = `https://qblog108.azurewebsites.net/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
 
                         fetch(likeurl, {
                             method: 'POST',
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         likeCounter();
 
                     } else if(isLiked === false){
-                        const unlikeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
+                        const unlikeurl = `https://qblog108.azurewebsites.net/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
 
                         fetch(unlikeurl,{
                             method:'DELETE',
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 const userID = localStorage.getItem('userID');
                 
                 const postId = item.id
-                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
+                const likeCount = `https://qblog108.azurewebsites.net/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
                 fetch(likeCount, {
                     method:'GET',
                     headers:{
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function(){
         
         isFollow = !isFollow
         if (isFollow) {
-            const url = `http://localhost:5105/api/follow?id=${encodeURIComponent(id)}&followerid=${encodeURIComponent(followerID)}`
+            const url = `https://qblog108.azurewebsites.net/api/follow?id=${encodeURIComponent(id)}&followerid=${encodeURIComponent(followerID)}`
 
             fetch(url,{
                 method: 'POST',
@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else{
 
-            const unfollow = `http://localhost:5105/api/follow?id=${encodeURIComponent(id)}&followerid=${encodeURIComponent(followerID)}`
+            const unfollow = `https://qblog108.azurewebsites.net/api/follow?id=${encodeURIComponent(id)}&followerid=${encodeURIComponent(followerID)}`
 
             fetch(unfollow,{
                 method: 'DELETE',

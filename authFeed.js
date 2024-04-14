@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function(){
     const forr = document.getElementById('for')
     const fol = document.getElementById('fol')
     const token = localStorage.getItem('token');
-    const apiBaseUrl = 'http://localhost:5105';
+    const apiBaseUrl = 'https://qblog108.azurewebsites.net/api/Post';
     const userID = localStorage.getItem('userID');
     
      forYou.style.borderBottom = "2px solid"
@@ -116,8 +116,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
                 try {
                     const apiUrl = isLiked
-                        ? `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&user=${encodeURIComponent(userID)}`
-                        : `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&user=${encodeURIComponent(userID)}`;
+                        ? `https://qblog108.azurewebsites.net/api/Post/api/Post/like?postid=${encodeURIComponent(postId)}&user=${encodeURIComponent(userID)}`
+                        : `https://qblog108.azurewebsites.net/api/Post/api/Post/like?postid=${encodeURIComponent(postId)}&user=${encodeURIComponent(userID)}`;
 
                     fetch(apiUrl, {
                         method: isLiked ? 'POST' : 'DELETE',
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function(){
             
             function likeCounter(){
                 const postId = item.id
-                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
+                const likeCount = `https://qblog108.azurewebsites.net/api/Post/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
                 fetch(likeCount, {
                     method:'GET',
                     headers:{
@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function(){
     })
 
     forr.addEventListener("click", function(){
-         const apiBaseUrl = 'http://localhost:5105';
+         const apiBaseUrl = 'https://qblog108.azurewebsites.net';
     const token = localStorage.getItem('token');
     console.log(token);
     const userID = localStorage.getItem('userID');
@@ -318,8 +318,8 @@ document.addEventListener("DOMContentLoaded", function(){
                 isLiked = !isLiked;
 
                 const fetchUrl = isLiked ? 
-                    `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}` :
-                    `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
+                    `https://qblog108.azurewebsites.net/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}` :
+                    `https://qblog108.azurewebsites.net/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
 
                 const response = await fetch(fetchUrl, {
                     method: isLiked ? 'POST' : 'DELETE',
@@ -350,7 +350,7 @@ document.addEventListener("DOMContentLoaded", function(){
             
             function likeCounter(){
                 const postId = item.id
-                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
+                const likeCount = `https://qblog108.azurewebsites.net/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
                 fetch(likeCount, {
                     method:'GET',
                     headers:{
@@ -530,7 +530,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
                 try {
                     if (isLiked === true) {
-                        const likeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
+                        const likeurl = `https://qblog108.azurewebsites.net/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
 
                         fetch(likeurl, {
                             method: 'POST',
@@ -554,7 +554,7 @@ document.addEventListener("DOMContentLoaded", function(){
                         likeCounter();
 
                     } else if (isLiked === false) {
-                        const unlikeurl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
+                        const unlikeurl = `https://qblog108.azurewebsites.net/api/Post/like?postid=${encodeURIComponent(postID)}&user=${encodeURIComponent(userID)}`;
                         fetch(unlikeurl,{
                             method:'DELETE',
                             headers:{
@@ -609,7 +609,7 @@ document.addEventListener("DOMContentLoaded", function(){
             
            function likeCounter(){
                 const postId = item.id
-                const likeCount = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
+                const likeCount = `https://qblog108.azurewebsites.net/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`
                 fetch(likeCount, {
                     method:'GET',
                     headers:{
@@ -702,7 +702,7 @@ document.addEventListener("DOMContentLoaded", function(){
     circle.style.backgroundColor = backgroundColors[random]
 
     async function getIdentity() {
-        const apiBaseUrl = 'http://localhost:5105';
+        const apiBaseUrl = 'https://qblog108.azurewebsites.net';
         const refreshToken = localStorage.getItem('refresh')
         const expjwt = token
 

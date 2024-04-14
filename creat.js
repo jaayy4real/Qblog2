@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to save the content
     async function saveContent() {
-        const apiBaseUrl = "http://localhost:5105";
+        const apiBaseUrl = "https://qblog108.azurewebsites.net";
         var title = document.getElementById("title").value;
         var body = quill.root.innerText;
 
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (!response.ok) throw new Error('Failed to fetch protected resource');
-            if(response.ok) window.location.href='http://127.0.0.1:5500/profile-page.html';
+            if(response.ok) window.location.href='https://jaayy4real.github.io/Qblog2/profile-page.html';
         } catch (error) {
             console.error('Error making protected request', error);
         }

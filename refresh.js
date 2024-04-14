@@ -1,5 +1,5 @@
 window.refreshTokenSwitch = async function (expjwt, refreshToken) {
-    const apiBaseUrl = 'http://localhost:5105';
+    const apiBaseUrl = 'https://qblog108.azurewebsites.net';
 
     try {
         const response = await fetch(apiBaseUrl + '/api/refresh', {

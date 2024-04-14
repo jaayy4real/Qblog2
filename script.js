@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     console.log('DOM content loaded');
-    const apiBaseUrl = 'http://localhost:5105';
+    const apiBaseUrl = 'https://qblog108.azurewebsites.net';
     const token = localStorage.getItem('token');
     console.log(token);
     const userID = localStorage.getItem('userID');
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const postId = item.id;
                     console.log(`The post ID being liked is: ${postId}`);
 
-                    const likeUrl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`;
+                    const likeUrl = `https://qblog108.azurewebsites.net/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`;
                     console.log(`The URL being used for the POST request is: ${likeUrl}`);
 
                     fetch(likeUrl, {
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const postId = item.id;
                     console.log(`The post ID being unliked is: ${postId}`);
 
-                    const unlikeUrl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`;
+                    const unlikeUrl = `https://qblog108.azurewebsites.net/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`;
                     console.log(`The URL being used for the DELETE request is: ${unlikeUrl}`);
 
                     fetch(unlikeUrl, {
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
             
             function likeCounter() {
                 const postId = item.id;
-                const likeCountUrl = `http://localhost:5105/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`;
+                const likeCountUrl = `https://qblog108.azurewebsites.net/api/Post/like?postid=${encodeURIComponent(postId)}&userid=${encodeURIComponent(userID)}`;
 
                 fetch(likeCountUrl, {
                     method: 'GET',

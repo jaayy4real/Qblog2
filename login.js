@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('signin-button').onclick = function () {
         const nameInput = document.getElementById('username-input').value;
         const passwordInput = document.getElementById('password-input').value;
-       const url = `http://localhost:5105/api/login?name=${encodeURIComponent(nameInput)}&password=${encodeURIComponent(passwordInput)}`;
+       const url = `https://qblog108.azurewebsites.net/api/login?name=${encodeURIComponent(nameInput)}&password=${encodeURIComponent(passwordInput)}`;
 
 
         fetch(url, {
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.setItem('refresh', data.refreshtoken)
             localStorage.setItem('userID', data.id)
            
-            window.location.href = 'http://127.0.0.1:5500/auth-feed.html'
+            window.location.href = 'https://jaayy4real.github.io/Qblog2//auth-feed.html'
             console.log(data);
          
         })
