@@ -330,17 +330,43 @@ ul{
     /* margin-top: 25%; */
 }
 
-@media screen and (max-width: 768px) {
-  /* Your styles for screens with a maximum width of 768px */
-  .container {
-    width: 80%;
-  }
 
-  .signup-button {
-    padding: 10px 60px;
-  }
+@media only screen and (max-width: 768px) {
+    .navbar {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 
-  .terms {
-    width: 60vw;
-  }
+    .swiper-container {
+        width: 100%;
+        max-width: none;
+    }
+
+    .container-2 {
+        flex-direction: column;
+    }
+
+    .land h1 {
+        font-size: 60px;
+        width: auto;
+    }
+
+    #api-data-list {
+        width: auto;
+    }
+    .post-holder{
+        width: auto !important;;
+       
+         /* width: 100%; */
+    }
+    .trending{
+        width: auto;
+    }
+    /* Add more styles for smaller screens as needed */
 }
+
+
+
+
+
+
