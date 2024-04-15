@@ -420,3 +420,43 @@ img {
     align-self: center;
    
 }
+
+@media only screen and (max-width: 768px) {
+    .navbar {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .swiper-container {
+        width: 100%;
+        max-width: none;
+    }
+
+    .container-2 {
+        flex-direction: column;
+    }
+
+    .land h1 {
+        font-size: 60px;
+        width: auto;
+    }
+
+    #api-data-list {
+        width: auto;
+    }
+    .post-holder{
+        width: auto !important;;
+       
+         /* width: 100%; */
+    }
+    .trending{
+        width: auto;
+    }
+    /* Add more styles for smaller screens as needed */
+}
+
+
+
+
+
+

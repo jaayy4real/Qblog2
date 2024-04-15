@@ -205,3 +205,24 @@ ul{
     letter-spacing: 0.1cap;
     margin-top: 2rem;
 }
+
+@media only screen and (max-width: 600px) {
+  /* CSS rules for screens smaller than 600px */
+  body {
+    background-color: lightblue;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+  /* CSS rules for screens between 601px and 900px */
+  body {
+    background-color: lightgreen;
+  }
+}
+
+@media only screen and (min-width: 901px) {
+  /* CSS rules for screens larger than 900px */
+  body {
+    background-color: lightyellow;
+  }
+}

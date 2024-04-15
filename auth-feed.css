@@ -329,3 +329,18 @@ ul{
     justify-content: center;
     /* margin-top: 25%; */
 }
+
+@media screen and (max-width: 768px) {
+  /* Your styles for screens with a maximum width of 768px */
+  .container {
+    width: 80%;
+  }
+
+  .signup-button {
+    padding: 10px 60px;
+  }
+
+  .terms {
+    width: 60vw;
+  }
+}

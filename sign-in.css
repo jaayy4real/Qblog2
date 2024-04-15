@@ -99,3 +99,18 @@ label{
 .terms p{
   text-align: center;
 }
+
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 80%;
+  }
+
+  .signup-button {
+    padding: 10px 60px;
+  }
+
+  .terms {
+    width: 60vw;
+  }
+}
